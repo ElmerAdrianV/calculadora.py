@@ -1,5 +1,8 @@
 # Calculadora
-![Calculadora](https://cdn-icons-png.flaticon.com/512/346/346399.png)
+<center>
+<img src="https://cdn-icons-png.flaticon.com/512/346/346399.png" width=150px>
+</center>
+
 ## Acerca del proyecto
 Este repositorio contiene la implementación de una calculadora en **Python** usando:
 - Clase Pila (Stack)
