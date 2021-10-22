@@ -3,7 +3,11 @@
     @author: ElmerAdrianV
 """
 from Pila import Pila
+from ArbolDeExpresiones import ArbolDeExpresiones
 class Calculadora:
+    def __init__ (self, cadena = "1+2"):
+        self.cadena=cadena
+        
     #Función que verificar si un string es un operador
     def is_operator(m, self):
         if m=="+" or m=="-"  or m=="*" or m=="/":
@@ -86,18 +90,18 @@ class Calculadora:
         if valid:
             valid = parentesisAbiertos==0
         return valid
-
+    def calcular(self, cadena):
+        self.lista_de_tokens= self.tokenizar(cadena)
+        if self.is_valid(self.lista_de_tokens):
+            self.arbol_expresion= ArbolDeExpresiones(self.lista_de_tokens)
+            try:
+                print(ArbolDeExpresiones.evaluacion())
+            except:
+                print("Error matemático. No puede dividirse entre 0")
+        else:
+            print("Error de sintaxis")# no es una expresion valida
 
 
 cadena="*4+3+n4+n1+2"
-
-print(Calculadora.tokenizar(cadena))
-print(Calculadora.is_valid(Calculadora.tokenizar(cadena)))
-
-
-
-
-
-
 
 
