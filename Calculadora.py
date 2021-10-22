@@ -1,32 +1,31 @@
-"""
-    Created on Fri Oct 15 20:15:09 2021
-    @author: ElmerAdrianV
-"""
-from Pila import Pila
 from ArbolDeExpresiones import ArbolDeExpresiones
+
 class Calculadora:
-    def __init__ (self, cadena = "1+2"):
-        self.cadena=cadena
+    def __init__(self, cadena="1+2"):
+        self.cadena = cadena
+        self.lista_de_tokens = self.tokenizar(self.cadena)
+        self.arbol_de_expresion = ArbolDeExpresiones(self.lista_de_tokens)  
         
     #Función que verificar si un string es un operador
-    def is_operator(m, self):
+    def is_operator(self, m):
         if m=="+" or m=="-"  or m=="*" or m=="/":
             resp = True
         else:
             resp = False
         return resp
     #Función que verificar si un string es un operador o un parentesis
-    def is_operator_or_parentheses(m, self):
+    def is_operator_or_parentheses(self, m):
         if self.is_operator(m) or m=="(" or m==")":
             resp = True
         else:
             resp = False
         return resp
     #Función que separa un string en una lista de tokens individibles: numeros, operadores & paréntesis.
-    def tokenizar(cadena,self):
+    def tokenizar(self, cadena):
+        cadena = cadena.replace(" ","")
         tokens=[]
         i=0
-        n = len(cadena)
+        n = len(cadena)      
         while i < n:
             #Si es un operador o un paréntisis, separa el string de len 1
             if self.is_operator_or_parentheses(cadena[i:i+1]):
@@ -42,7 +41,7 @@ class Calculadora:
         return tokens
 
     #Función que verifica si un lista de tokens tiene validad sintáctica.
-    def is_valid(expresion, self):
+    def is_valid(self, expresion):
         #Variable que guarda el número de paréntisis abiertos
         parentesisAbiertos = 0
         #Variable que funcionará como iterador sobre la cadena
@@ -81,7 +80,9 @@ class Calculadora:
                 else:
                     #si hay un operador al final la expresion esta mal
                     valid = False
-            else:
+            else:#cuando expresion i es un numero
+                if(expresion[i].__contains__("n") and expresion[i][0]!="n"):                
+                    valid=False
                 if i+1<n:
                     # El siguiente de un número solo puede ser un operador o un parentesis cerrado
                     valid = self.is_operator(expresion[i+1]) or expresion[i+1]==")"
@@ -90,18 +91,15 @@ class Calculadora:
         if valid:
             valid = parentesisAbiertos==0
         return valid
+
+            
     def calcular(self, cadena):
-        self.lista_de_tokens= self.tokenizar(cadena)
+        self.lista_de_tokens = self.tokenizar(cadena)
         if self.is_valid(self.lista_de_tokens):
-            self.arbol_expresion= ArbolDeExpresiones(self.lista_de_tokens)
+            self.arbol_de_expresion = ArbolDeExpresiones(self.lista_de_tokens)
             try:
-                print(ArbolDeExpresiones.evaluacion())
+                print( self.arbol_de_expresion.evaluacion() )
             except:
-                print("Error matemático. No puede dividirse entre 0")
+                print("Error Matematico. No se puede dividir entre 0")
         else:
-            print("Error de sintaxis")# no es una expresion valida
-
-
-cadena="*4+3+n4+n1+2"
-
-
+            print("Error de sintaxis; No es una expresion valid")
