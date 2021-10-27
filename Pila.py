@@ -1,11 +1,20 @@
-"""
-    Created on Fri Oct 15 20:25:09 2021
-    @author: ElmerAdrianV
-"""
-class Pila:
+# -*- coding: utf-8 -*-
+
+class Pila: #Considerando que la lista de python tiene funciones de pila, solo  es restringir esas funciones
     def __init__(self):
         self.lista = []
     
+    def __str__(self):
+        miCadena = ""
+        for x in self.lista:
+            miCadena += str(x)
+            miCadena += " \n"
+        return miCadena
+        
+    def __repr__(self):
+        for x in self.lista:
+            print(x)
+            
     def isEmpty(self):
         return (not self.lista) or (len(self.lista)==0) 
         
@@ -22,6 +31,7 @@ class Pila:
         
     def size(self):
         return len(self.lista)
+    
     
     def imprime(self):
         for x in self.lista:

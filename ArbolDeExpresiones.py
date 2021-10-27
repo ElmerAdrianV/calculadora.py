@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
+
 from Pila import Pila
-from Nodo import Nodo
+from Node import Node
 
 class ArbolDeExpresiones:
     def __init__(self, listaDeTokens):
@@ -12,9 +15,11 @@ class ArbolDeExpresiones:
         self.PilaA = Pila()
         self.PilaB = Pila()
         
-        for x in self.listaDeTokens:
+        for x in listaDeTokens:
             if (x.isdecimal() or x.__contains__(".") or x.__contains__("n")):##puedo hacer algo asi de burdo porque ya cheque el la clase Tokenizadora la validez de la expresion                
-                nuevoArbol = Nodo(x)
+                if(x.__contains__("n")):
+                    x = x.replace("n", "-")
+                nuevoArbol = Node(x)
                 self.PilaB.push(nuevoArbol)
             
             if x == "(":
@@ -26,7 +31,7 @@ class ArbolDeExpresiones:
                     P = self.PilaB.pop()
                     S = self.PilaB.pop()
                     
-                    nuevoArbolDeExpresion = Nodo(tokenEliminado)
+                    nuevoArbolDeExpresion = Node(tokenEliminado)
                     nuevoArbolDeExpresion.derecho = P
                     nuevoArbolDeExpresion.izquierdo = S
                     
@@ -50,7 +55,7 @@ class ArbolDeExpresiones:
                     P = self.PilaB.pop()
                     S = self.PilaB.pop()
                     
-                    nuevoArbolDeExpresion = Nodo(tope_de_pila)
+                    nuevoArbolDeExpresion = Node(tope_de_pila)
                     nuevoArbolDeExpresion.derecho = P
                     nuevoArbolDeExpresion.izquierdo = S
                     
@@ -66,7 +71,7 @@ class ArbolDeExpresiones:
             operador = self.PilaA.pop()
             P = self.PilaB.pop()
             S = self.PilaB.pop()
-            nuevoArbolDeExpresion = Nodo(operador)
+            nuevoArbolDeExpresion = Node(operador)
             nuevoArbolDeExpresion.derecho = P
             nuevoArbolDeExpresion.izquierdo = S
             self.PilaB.push(nuevoArbolDeExpresion)
@@ -87,7 +92,12 @@ class ArbolDeExpresiones:
             self.inorder(nodo.derecho)
     
     def evaluacion(self):
-        self.evaluacion_de_arbol(self.raiz)
+        respuesta = self.evaluacion_de_arbol(self.raiz)
+        if respuesta - int(respuesta)==0.0:
+            respuesta = int(respuesta)
+        
+        return respuesta
+
         
     def evaluacion_de_arbol(self, nodo):
         # empty tree
@@ -117,5 +127,6 @@ class ArbolDeExpresiones:
         else:
             if(valor_derecha == 0):
                 Exception("No se puede dividir entre 0")
-
-            return valor_izquierda / valor_derecha        
+            else:
+                return valor_izquierda / valor_derecha        
+                
