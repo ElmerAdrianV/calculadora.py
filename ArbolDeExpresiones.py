@@ -100,21 +100,21 @@ class ArbolDeExpresiones:
 
         
     def evaluacion_de_arbol(self, nodo):
-        # empty tree
+        # arbol vacio
         if nodo is None:
             return 0
       
-        # leaf node
+        # nodo hoja
         if nodo.izquierdo is None and nodo.derecho is None:
             return float(nodo.dato)
       
-        # evaluate left tree
+        # evalua el arbol izquierdo
         valor_izquierda = self.evaluacion_de_arbol(nodo.izquierdo)
       
-        # evaluate right tree
+        # evaluate el arbol derecho
         valor_derecha = self.evaluacion_de_arbol(nodo.derecho)
       
-        # check which operation to apply
+        # decide que operacin aplicar
         if nodo.dato == '+':
             return valor_izquierda + valor_derecha
       
