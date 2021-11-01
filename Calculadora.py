@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from ArbolDeExpresiones import ArbolDeExpresiones
 
 class Calculadora:
@@ -71,8 +73,8 @@ class Calculadora:
                 else:
                     parentesisAbiertos-=1
                     if i+1<n:
-                    # El siguiente de un parentesis cerrado solo puede ser un operador
-                        valid = self.is_operator(expresion[i+1])
+                    # El siguiente de un parentesis cerrado solo puede ser un operador o otro parentisis cerrado
+                        valid = self.is_operator(expresion[i+1]) or expresion[i+1]==")"
             elif self.is_operator(m):
                 if i+1<n:
                     # El siguiente de un operador solo puede ser un numero o un parentesis abierto
@@ -102,4 +104,4 @@ class Calculadora:
             except:
                 print("Error Matematico. No se puede dividir entre 0")
         else:
-            print("Error de sintaxis; No es una expresion valid")
+            print("Error de sintaxis; No es una expresion valida")
